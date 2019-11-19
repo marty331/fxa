@@ -19,6 +19,9 @@ export default {
   dependsOn: [ExperimentMixin],
 
   beforeRender() {
+    if (this.broker.getCapability('disableLegacySignupLink')) {
+      return;
+    }
     if (this.isInSignupCodeExperiment()) {
       const experimentGroup = this.getSignupCodeExperimentGroup();
       this.createExperiment(EXPERIMENT_NAME, experimentGroup);

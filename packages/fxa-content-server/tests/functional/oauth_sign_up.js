@@ -13,33 +13,25 @@ const config = intern._config;
 var PASSWORD = 'password12345678';
 const SUCCESS_URL = config.fxaContentRoot + 'oauth/success/dcdb5ae7add825d2';
 var email;
-var bouncedEmail;
+//var bouncedEmail;
 
 const {
-  click,
   clearBrowserState,
-  closeCurrentWindow,
   fillOutEmailFirstSignUp,
-  getFxaClient,
+  fillOutSignUpCode,
+  //  getFxaClient,
   noEmailExpected,
-  noSuchElement,
-  openExternalSite,
   openFxaFromRp,
   openPage,
-  openVerificationLinkInDifferentBrowser,
-  openVerificationLinkInNewTab,
-  openVerificationLinkInSameTab,
-  switchToWindow,
   testElementExists,
-  testElementTextInclude,
   testUrlInclude,
-  visibleByQSA,
+  //  visibleByQSA,
 } = FunctionalHelpers;
 
 registerSuite('oauth signup', {
   beforeEach: function() {
     email = TestHelpers.createEmail();
-    bouncedEmail = TestHelpers.createEmail();
+    //  bouncedEmail = TestHelpers.createEmail();
 
     // clear localStorage to avoid polluting other tests.
     // Without the clear, /signup tests fail because of the info stored
@@ -51,8 +43,9 @@ registerSuite('oauth signup', {
       })
     );
   },
+
   tests: {
-    'signup, verify same browser': function() {
+    signup: function() {
       return (
         this.remote
           .then(openFxaFromRp('enter-email'))
@@ -63,187 +56,13 @@ registerSuite('oauth signup', {
 
           .then(fillOutEmailFirstSignUp(email, PASSWORD))
 
-          .then(testElementExists(selectors.CONFIRM_SIGNUP.HEADER))
-          .then(openVerificationLinkInNewTab(email, 0))
+          .then(testElementExists(selectors.CONFIRM_SIGNUP_CODE.HEADER))
+          .then(fillOutSignUpCode(email, 0))
 
-          .then(switchToWindow(1))
-          // wait for the verified window in the new tab
-          .then(testElementExists(selectors.SIGNUP_COMPLETE.HEADER))
-          // user sees the name of the RP, but cannot redirect
-          .then(
-            testElementTextInclude(
-              selectors.SIGNUP_COMPLETE.SERVICE_NAME,
-              '123done'
-            )
-          )
-
-          // switch to the original window
-          .then(closeCurrentWindow())
           .then(testElementExists(selectors['123DONE'].AUTHENTICATED))
 
           // Do not expect a post-verification email, those are for Sync.
           .then(noEmailExpected(email, 1))
-      );
-    },
-
-    'signup in Chrome for Android, verify same browser': function() {
-      return (
-        this.remote
-          .then(
-            openFxaFromRp('enter-email', {
-              query: {
-                forceUA:
-                  'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Mobile Safari/537.36',
-              },
-            })
-          )
-          .then(
-            testElementTextInclude(selectors.ENTER_EMAIL.SUB_HEADER, '123done')
-          )
-          .then(testUrlInclude('client_id='))
-          .then(testUrlInclude('state='))
-
-          .then(fillOutEmailFirstSignUp(email, PASSWORD))
-
-          .then(testElementExists(selectors.CONFIRM_SIGNUP.HEADER))
-          .then(openVerificationLinkInNewTab(email, 0))
-
-          .then(switchToWindow(1))
-          // wait for the verified window in the new tab
-          .then(testElementExists(selectors.SIGNUP_COMPLETE.HEADER))
-          .then(noSuchElement(selectors.SIGNUP_COMPLETE.CONTINUE_BUTTON))
-          // user sees the name of the RP, but cannot redirect
-          .then(
-            testElementTextInclude(
-              selectors.SIGNUP_COMPLETE.SERVICE_NAME,
-              '123done'
-            )
-          )
-
-          // switch to the original window
-          .then(closeCurrentWindow())
-
-          .then(testElementExists(selectors.SIGNUP_COMPLETE.HEADER))
-          .then(click(selectors.SIGNUP_COMPLETE.CONTINUE_BUTTON))
-
-          .then(testElementExists(selectors['123DONE'].AUTHENTICATED))
-      );
-    },
-
-    'signup, verify same browser with original tab closed': function() {
-      return (
-        this.remote
-          .then(openFxaFromRp('enter-email'))
-          .then(fillOutEmailFirstSignUp(email, PASSWORD))
-
-          .then(testElementExists(selectors.CONFIRM_SIGNUP.HEADER))
-          // user browses to another site.
-          .switchToFrame(null)
-          .then(openExternalSite())
-          .then(openVerificationLinkInNewTab(email, 0))
-
-          .then(switchToWindow(1))
-          .then(testElementExists(selectors.SIGNUP_COMPLETE.HEADER))
-
-          // switch to the original window
-          .then(closeCurrentWindow())
-      );
-    },
-
-    'signup, verify same browser by replacing the original tab': function() {
-      return this.remote
-        .then(openFxaFromRp('enter-email'))
-        .then(fillOutEmailFirstSignUp(email, PASSWORD))
-
-        .then(testElementExists(selectors.CONFIRM_SIGNUP.HEADER))
-        .then(openVerificationLinkInSameTab(email, 0))
-
-        .then(testElementExists(selectors['123DONE'].AUTHENTICATED));
-    },
-
-    "signup, verify different browser - from original tab's P.O.V.": function() {
-      return (
-        this.remote
-          .then(openFxaFromRp('enter-email'))
-          .then(fillOutEmailFirstSignUp(email, PASSWORD))
-
-          .then(testElementExists(selectors.CONFIRM_SIGNUP.HEADER))
-          .then(openVerificationLinkInDifferentBrowser(email))
-
-          // original tab redirects back to 123done
-          .then(testElementExists(selectors['123DONE'].AUTHENTICATED))
-      );
-    },
-
-    "signup, verify different browser - from new browser's P.O.V.": function() {
-      return (
-        this.remote
-          .then(openFxaFromRp('enter-email'))
-          .then(fillOutEmailFirstSignUp(email, PASSWORD))
-
-          .then(testElementExists(selectors.CONFIRM_SIGNUP.HEADER))
-
-          // clear browser state to simulate opening link in a new browser
-          .then(
-            clearBrowserState({
-              '123done': true,
-              contentServer: true,
-            })
-          )
-
-          .then(openVerificationLinkInSameTab(email, 0))
-          // new browser dead ends at the 'account verified' screen.
-          .then(testElementExists(selectors.SIGNUP_COMPLETE.HEADER))
-          .then(
-            testElementTextInclude(
-              selectors.SIGNUP_COMPLETE.SERVICE_NAME,
-              '123done'
-            )
-          )
-
-          // make sure the relier name is not a link
-          .then(noSuchElement('#redirectTo'))
-      );
-    },
-
-    'signup, bounce email, allow user to restart flow but force a different email': function() {
-      this.timeout = 60 * 1000;
-
-      return (
-        this.remote
-          .then(openFxaFromRp('enter-email'))
-          .then(fillOutEmailFirstSignUp(bouncedEmail, PASSWORD))
-
-          .then(testElementExists(selectors.CONFIRM_SIGNUP.HEADER))
-          .then(function() {
-            return getFxaClient().accountDestroy(bouncedEmail, PASSWORD);
-          })
-
-          .then(testElementExists(selectors.ENTER_EMAIL.HEADER))
-          // expect an error message to already be present on redirect
-          .then(visibleByQSA(selectors.ENTER_EMAIL.TOOLTIP_BOUNCED_EMAIL))
-
-          .then(fillOutEmailFirstSignUp(email, PASSWORD))
-
-          .then(testElementExists(selectors.CONFIRM_SIGNUP.HEADER))
-          .then(openVerificationLinkInNewTab(email, 0))
-
-          .then(switchToWindow(1))
-          // wait for the verification step to complete
-          .then(testElementExists(selectors.SIGNUP_COMPLETE.SERVICE_NAME))
-
-          // user sees the name of the RP,
-          // but cannot redirect
-          .then(
-            testElementTextInclude(
-              selectors.SIGNUP_COMPLETE.SERVICE_NAME,
-              '123done'
-            )
-          )
-          // switch to the original window
-          .then(closeCurrentWindow())
-
-          .then(testElementExists(selectors['123DONE'].AUTHENTICATED))
       );
     },
 

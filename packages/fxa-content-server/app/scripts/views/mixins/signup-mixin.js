@@ -34,7 +34,10 @@ export default {
           resume: this.getStringifiedResumeToken(account),
         };
 
-        if (this.getSignupCodeExperimentGroup() === 'treatment') {
+        if (
+          this.broker.getCapability('disableLegacySignupLink') ||
+          this.getSignupCodeExperimentGroup() === 'treatment'
+        ) {
           options.verificationMethod = 'email-otp';
         }
 

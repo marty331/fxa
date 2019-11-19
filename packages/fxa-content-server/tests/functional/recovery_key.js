@@ -25,11 +25,12 @@ const {
   clearBrowserState,
   click,
   closeCurrentWindow,
-  fillOutRecoveryKey,
   fillOutCompleteResetPassword,
-  fillOutResetPassword,
   fillOutEmailFirstSignIn,
   fillOutEmailFirstSignUp,
+  fillOutRecoveryKey,
+  fillOutResetPassword,
+  fillOutSignUpCode,
   openPage,
   openVerificationLinkInDifferentBrowser,
   openVerificationLinkInNewTab,
@@ -48,10 +49,11 @@ registerSuite('Recovery key', {
 
     return (
       this.remote
+        .then(clearBrowserState({ force: true }))
         .then(openPage(ENTER_EMAIL_URL, selectors.ENTER_EMAIL.HEADER))
         .then(fillOutEmailFirstSignUp(email, PASSWORD))
-        .then(testElementExists(selectors.CONFIRM_SIGNUP.HEADER))
-        .then(openVerificationLinkInSameTab(email, 0))
+        .then(testElementExists(selectors.CONFIRM_SIGNUP_CODE.HEADER))
+        .then(fillOutSignUpCode(email, 0))
         .then(testElementExists(selectors.SETTINGS.HEADER))
         .then(openPage(SETTINGS_URL, selectors.SETTINGS.HEADER))
 
@@ -75,10 +77,6 @@ registerSuite('Recovery key', {
         })
         .end()
     );
-  },
-
-  afterEach: function() {
-    return this.remote.then(clearBrowserState());
   },
 
   tests: {

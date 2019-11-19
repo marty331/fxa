@@ -16,32 +16,15 @@ let email;
 const {
   click,
   clearBrowserState,
-  closeCurrentWindow,
   fillOutEmailFirstSignUp,
   fillOutSignUpCode,
   getSignupCode,
   openPage,
-  openVerificationLinkInNewTab,
-  switchToWindow,
   testElementExists,
   testElementTextInclude,
   testSuccessWasShown,
   type,
 } = FunctionalHelpers;
-
-const experimentTreatmentParams = {
-  query: {
-    forceExperiment: 'signupCode',
-    forceExperimentGroup: 'treatment',
-  },
-};
-
-const experimentControlParams = {
-  query: {
-    forceExperiment: 'signupCode',
-    forceExperimentGroup: 'control',
-  },
-};
 
 const ENTER_EMAIL_URL = config.fxaContentRoot;
 
@@ -62,54 +45,9 @@ registerSuite('signup with code', {
   },
 
   tests: {
-    control: function() {
+    'valid code then click back': function() {
       return this.remote
-        .then(
-          openPage(
-            ENTER_EMAIL_URL,
-            selectors.ENTER_EMAIL.HEADER,
-            experimentControlParams
-          )
-        )
-        .then(fillOutEmailFirstSignUp(email, PASSWORD))
-        .then(testElementExists(selectors.CONFIRM_SIGNUP.HEADER))
-        .then(openVerificationLinkInNewTab(email, 0))
-
-        .then(switchToWindow(1))
-        .then(testElementExists(selectors.SETTINGS.HEADER))
-        .then(testSuccessWasShown())
-        .then(closeCurrentWindow())
-
-        .then(testElementExists(selectors.SETTINGS.HEADER))
-        .then(testSuccessWasShown());
-    },
-
-    'treatment - valid code': function() {
-      return this.remote
-        .then(
-          openPage(
-            ENTER_EMAIL_URL,
-            selectors.ENTER_EMAIL.HEADER,
-            experimentTreatmentParams
-          )
-        )
-        .then(fillOutEmailFirstSignUp(email, PASSWORD))
-        .then(testAtConfirmScreen(email))
-        .then(fillOutSignUpCode(email, 0))
-
-        .then(testElementExists(selectors.SETTINGS.HEADER))
-        .then(testSuccessWasShown());
-    },
-
-    'treatment - valid code then click back': function() {
-      return this.remote
-        .then(
-          openPage(
-            ENTER_EMAIL_URL,
-            selectors.ENTER_EMAIL.HEADER,
-            experimentTreatmentParams
-          )
-        )
+        .then(openPage(ENTER_EMAIL_URL, selectors.ENTER_EMAIL.HEADER))
         .then(fillOutEmailFirstSignUp(email, PASSWORD))
         .then(testAtConfirmScreen(email))
         .then(fillOutSignUpCode(email, 0))
@@ -120,15 +58,9 @@ registerSuite('signup with code', {
         .then(testAtConfirmScreen(email));
     },
 
-    'treatment - invalid code': function() {
+    'invalid code': function() {
       return this.remote
-        .then(
-          openPage(
-            ENTER_EMAIL_URL,
-            selectors.ENTER_EMAIL.HEADER,
-            experimentTreatmentParams
-          )
-        )
+        .then(openPage(ENTER_EMAIL_URL, selectors.ENTER_EMAIL.HEADER))
         .then(fillOutEmailFirstSignUp(email, PASSWORD))
         .then(testAtConfirmScreen(email))
         .then(getSignupCode(email, 0))
