@@ -1807,8 +1807,9 @@ function waitForWebChannelCommand(command, done) {
       storedEvents = [];
     }
 
-    if (storedEvents.indexOf(command) > -1) {
-      done();
+    const event = storedEvents.find(event => event.command === command);
+    if (event) {
+      done(event);
     } else {
       setTimeout(check, 50);
     }
@@ -1823,13 +1824,16 @@ function waitForWebChannelCommand(command, done) {
  * @param {string} command to ensure was received
  * @returns {promise} rejects if message has not been received.
  */
-const testIsBrowserNotified = thenify(function(command) {
+const testIsBrowserNotified = thenify(function(
+  command,
+  additionalTests = null
+) {
   return (
     this.parent
       // Allow some time for the event to come through.
       .setExecuteAsyncTimeout(4000)
       .executeAsync(waitForWebChannelCommand, [command])
-      .then(null, function(err) {
+      .then(additionalTests, function(err) {
         if (/ScriptTimeout/.test(String(err))) {
           var noSuchNotificationError = new Error('NoSuchBrowserNotification');
           noSuchNotificationError.command = command;
