@@ -6,6 +6,7 @@ import { Action, ApiAction } from '../actions';
 // keys where respective fetch state will be managed. Add new APIs here.
 type ApiTypeToStoreMap = Record<ApiAction['type'], keyof State>;
 const apiTypeToStoreMap: ApiTypeToStoreMap = {
+  fetchSurvey: 'surveyQuestions',
   fetchProfile: 'profile',
   fetchToken: 'token',
   fetchPlans: 'plans',

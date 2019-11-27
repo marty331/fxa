@@ -168,7 +168,11 @@ export const Product = ({
 
     // Do we already have a subscription to the product in the selected plan?
     if (customerIsSubscribedToProduct(customerSubscriptions, productPlans)) {
-      return <SubscriptionRedirect {...{ plan: selectedPlan }} />;
+      return (
+        <SubscriptionRedirect
+          {...{ plan: selectedPlan, surveyQuestions: surveyQuestions }}
+        />
+      );
     }
   }
 
@@ -248,6 +252,7 @@ const findUpgradeFromPlan = (
 // https://github.com/mozilla/fxa/issues/3020
 export default connect(
   (state: State) => ({
+    surveyQuestions: selectors.surveyQuestions(state),
     customer: selectors.customer(state),
     customerSubscriptions: selectors.customerSubscriptions(state),
     profile: selectors.profile(state),

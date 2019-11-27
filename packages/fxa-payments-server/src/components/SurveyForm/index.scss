@@ -1,0 +1,52 @@
+@import '../../../../fxa-content-server/app/styles/breakpoints';
+
+.surveyContainer {
+  margin-bottom: 1em;
+}
+.radioGroup {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 10px;
+}
+.radioButton {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  justify-items: center;
+}
+.radioButton:nth-child(even) label {
+  opacity: 0;
+}
+.questionTitle {
+  text-align: left;
+  font-family: SFUIDisplay;
+  font-size: 13px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #000000;
+}
+.survey {
+  button {
+    width: 27em !important;
+  }
+}
+.questionParent textarea {
+  border-radius: .5em;
+  padding: .5em;
+  resize: none;
+  height: 5em;
+  width: 30em;
+}
+.userMessage {
+  font-family: SFUIDisplay;
+  font-size: 16px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.56;
+  letter-spacing: normal;
+  text-align: center;
+  color: #000000;
+}

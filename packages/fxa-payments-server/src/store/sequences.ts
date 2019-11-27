@@ -3,6 +3,7 @@ import { Plan } from './types';
 import { FunctionWithIgnoredReturn } from '../lib/types';
 
 const {
+  fetchSurvey,
   fetchProfile,
   fetchPlans,
   fetchSubscriptions,
@@ -30,6 +31,9 @@ const handleThunkError = (err: any) => {
 };
 
 // Convenience functions to produce action sequences via react-thunk functions
+export const fetchSurveyRouteResources = () => async (dispatch: Function) => {
+  await Promise.all([dispatch(fetchSurvey())]).catch(handleThunkError);
+};
 export const fetchProductRouteResources = () => async (dispatch: Function) => {
   await Promise.all([
     dispatch(fetchPlans()),
@@ -121,6 +125,7 @@ export const updatePaymentAndRefresh = (
 };
 
 export const sequences = {
+  fetchSurveyRouteResources,
   fetchProductRouteResources,
   fetchSubscriptionsRouteResources,
   fetchCustomerAndSubscriptions,

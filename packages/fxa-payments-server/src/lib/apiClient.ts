@@ -86,6 +86,23 @@ async function apiFetch(
   return response.json();
 }
 
+export function apiFetchSurvey() {
+  const survey_id = '5294819';
+  const api_token = 'A9CkcPjbrU3OU';
+  const api_token_secret = 'f871f597d538acfdb50d6c9e011884fd046920a583aa5fb855';
+  const url = 'https://restapi.surveygizmo.com/v5/survey/';
+
+  return apiFetch(
+    'GET',
+    url +
+      survey_id +
+      '?api_token=' +
+      api_token +
+      '&api_token_secret=' +
+      api_token_secret
+  );
+}
+
 export function apiFetchProfile() {
   return apiFetch('GET', `${config.servers.profile.url}/v1/profile`);
 }

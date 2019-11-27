@@ -103,3 +103,24 @@ export type CreateSubscriptionError = {
 export interface UpdateSubscriptionPlanResult {
   subscriptionId: string;
 }
+
+export interface SurveyQuestions {
+  surveyQuestions: Array<SurveyQuestion>;
+}
+
+export interface SurveyQuestion {
+  id: number;
+  base_type: string;
+  type: string;
+  title: string;
+  shortname: string;
+  value: string;
+  options: Array<SurveyQuestionOptions>;
+}
+
+export interface SurveyQuestionOptions {
+  id: number;
+  title: string;
+  value: string;
+  selected: boolean;
+}

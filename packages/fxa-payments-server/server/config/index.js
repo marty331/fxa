@@ -33,7 +33,7 @@ const conf = convict({
   },
   csp: {
     enabled: {
-      default: true,
+      default: false,
       doc: 'Send "Content-Security-Policy" header',
       env: 'CSP_ENABLED',
     },

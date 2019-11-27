@@ -1,4 +1,5 @@
 import {
+  apiFetchSurvey,
   apiFetchProfile,
   apiFetchPlans,
   apiFetchSubscriptions,
@@ -14,6 +15,8 @@ import {
 import { Plan } from '../types';
 
 export default {
+  fetchSurvey: () =>
+    ({ type: 'fetchSurvey', payload: apiFetchSurvey() } as const),
   fetchProfile: () =>
     ({ type: 'fetchProfile', payload: apiFetchProfile() } as const),
   fetchToken: () => ({ type: 'fetchToken', payload: apiFetchToken() } as const),

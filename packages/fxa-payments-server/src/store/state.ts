@@ -10,6 +10,7 @@ import {
   CreateSubscriptionResult,
   CreateSubscriptionError,
   UpdateSubscriptionPlanResult,
+  SurveyQuestions,
 } from './types';
 
 export const defaultState = {
@@ -29,6 +30,7 @@ export const defaultState = {
     APIError
   >(),
   updatePayment: uninitializedFetch<any>(),
+  surveyQuestions: uninitializedFetch<SurveyQuestions, APIError>(),
 };
 
 // https://blog.usejournal.com/writing-better-reducers-with-react-and-typescript-3-4-30697b926ada

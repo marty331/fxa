@@ -29,6 +29,12 @@ export interface Config {
   stripe: {
     apiKey: string;
   };
+  survey: {
+    survey_id: string;
+    api_token: string;
+    api_token_secret: string;
+    url: string;
+  };
 }
 
 export const config: Config = defaultConfig();
@@ -60,6 +66,12 @@ export function defaultConfig(): Config {
     },
     stripe: {
       apiKey: '',
+    },
+    survey: {
+      url: '',
+      survey_id: '',
+      api_token: '',
+      api_token_secret: '',
     },
   };
 }
