@@ -28,11 +28,11 @@ module.exports = function(config, i18n) {
     require('./routes/get-metrics-flow')(config),
     require('./routes/get-well-known-change-password')(),
     require('./routes/post-metrics')(),
-    require('./routes/post-metrics-errors')(),
     require('./routes/redirect-complete-to-verified')(),
     require('./routes/redirect-download-firefox')(config),
     require('./routes/redirect-m-to-adjust')(config),
     require('./routes/get-500')(config),
+    require('./routes/validate-email-domain')(),
   ];
 
   if (config.get('csp.enabled')) {

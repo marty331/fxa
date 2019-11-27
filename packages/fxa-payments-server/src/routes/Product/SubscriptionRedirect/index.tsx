@@ -6,8 +6,13 @@ import {
   SurveyQuestionOptions,
 } from '../../../store/types';
 import { AppContext } from '../../../lib/AppContext';
+<<<<<<< HEAD
 import SurveyForm from '../../../components/SurveyForm';
 import { selectors, SelectorReturns } from '../../../store/selectors';
+=======
+
+import { metadataFromPlan } from '../../../store/utils';
+>>>>>>> 5984f9a545867c289d914ac462de78a5f61f7bfe
 import fpnImage from '../../../images/fpn';
 import './index.scss';
 import { apiFetchSurvey } from '../../../lib/apiClient';
@@ -99,23 +104,30 @@ export type SubscriptionRedirectProps = {
   surveyQuestions: SelectorReturns['surveyQuestions'];
 };
 
+<<<<<<< HEAD
 export const SubscriptionRedirect = ({
   plan: { product_id, product_name },
   surveyQuestions,
 }: SubscriptionRedirectProps) => {
+=======
+export const SubscriptionRedirect = ({ plan }: SubscriptionRedirectProps) => {
+  const { product_id, product_name } = plan;
+  const { webIconURL, downloadURL } = metadataFromPlan(plan);
+>>>>>>> 5984f9a545867c289d914ac462de78a5f61f7bfe
   const {
     config: { productRedirectURLs },
     navigateToUrl,
   } = useContext(AppContext);
 
   const redirectUrl =
-    productRedirectURLs[product_id] || defaultProductRedirectURL;
+    downloadURL || productRedirectURLs[product_id] || defaultProductRedirectURL;
 
   console.log('survey questions: ' + surveyQuestions);
 
   return (
     <div className="product-payment" data-testid="subscription-redirect">
       <div className="subscription-ready">
+<<<<<<< HEAD
         <img alt="Firefox Private Network" src={fpnImage} />
         <h2>Your subscription is ready</h2>
         <div className="formBreak"></div>
@@ -127,6 +139,22 @@ export const SubscriptionRedirect = ({
 
         <div className="formBreak breakBuffer"></div>
         <a href={redirectUrl}>No thanks, just take me to {product_name}.</a>
+=======
+        <h2>Your subscription is ready</h2>
+        <img
+          alt={product_name}
+          src={webIconURL || fpnImage}
+          width="96"
+          height="96"
+        />
+        <p>
+          Hang on for a moment while we send you to the{' '}
+          <span className="plan-name">{product_name}</span> download page.
+        </p>
+        <a href={redirectUrl}>
+          Click here if you're not automatically redirected
+        </a>
+>>>>>>> 5984f9a545867c289d914ac462de78a5f61f7bfe
       </div>
     </div>
   );

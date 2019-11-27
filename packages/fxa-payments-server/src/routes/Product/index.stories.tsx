@@ -15,6 +15,8 @@ import {
   SurveyQuestion,
   SurveyQuestions,
   SurveyQuestionOptions,
+  Plan,
+  Profile,
 } from '../../store/types';
 
 function init() {
@@ -204,7 +206,7 @@ const ProductRoute = ({
 
 const PRODUCT_ID = 'product_8675309';
 
-const PROFILE = {
+const PROFILE: Profile = {
   amrValues: [],
   avatar: 'http://placekitten.com/256/256',
   avatarDefault: false,
@@ -215,7 +217,7 @@ const PROFILE = {
   uid: '8675309asdf',
 };
 
-const PLANS = [
+const PLANS: Plan[] = [
   {
     plan_id: 'plan_123',
     plan_name: 'Example Plan',
@@ -224,6 +226,9 @@ const PLANS = [
     currency: 'USD',
     amount: 1050,
     interval: 'month',
+    product_metadata: {
+      webIconURL: 'http://placekitten.com/512/512',
+    },
   },
 ];
 

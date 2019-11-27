@@ -15,7 +15,6 @@ module.exports = [
   'tests/server/lang.js',
   'tests/server/metrics.js',
   'tests/server/metrics-collector-stderr.js',
-  'tests/server/metrics-errors.js',
   'tests/server/metrics-unit.js',
   'tests/server/noindex.js',
   'tests/server/configuration.js',
@@ -35,6 +34,7 @@ module.exports = [
   'tests/server/routes/post-metrics.js',
   'tests/server/routes/redirect-download-firefox.js',
   'tests/server/routes/redirect-m-to-adjust.js',
+  'tests/server/routes/validate-email-domain.js',
   'tests/server/logging/route_logging.js',
   'tests/server/validation.js',
 ];
