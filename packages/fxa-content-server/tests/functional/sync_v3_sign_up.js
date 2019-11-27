@@ -295,8 +295,6 @@ registerSuite(
             .then(
               openPage(ENTER_EMAIL_URL, selectors.ENTER_EMAIL.HEADER, {
                 query: {
-                  forceExperiment: 'signupCode',
-                  forceExperimentGroup: 'treatment',
                   forceUA: uaStrings['desktop_firefox_58'],
                 },
                 webChannelResponses: {

@@ -559,10 +559,6 @@ const BaseAuthenticationBroker = Backbone.Model.extend({
      */
     disableLegacySigninSignup: false,
     /**
-     * should the legacy signup links be disabled?
-     */
-    disableLegacySignupLink: false,
-    /**
      * Is the email-first flow supported?
      */
     emailFirst: false,
