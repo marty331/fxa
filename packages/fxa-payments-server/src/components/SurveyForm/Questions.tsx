@@ -3,7 +3,7 @@ import Question from './Question';
 import { SurveyQuestions } from '../../store/types';
 
 type QuestionsProps = {
-  questions: SurveyQuestions;
+  questions: SurveyQuestions | null;
 };
 
 export const Questions = ({ questions }: QuestionsProps) => {

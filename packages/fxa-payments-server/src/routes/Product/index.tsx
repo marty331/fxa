@@ -168,11 +168,7 @@ export const Product = ({
 
     // Do we already have a subscription to the product in the selected plan?
     if (customerIsSubscribedToProduct(customerSubscriptions, productPlans)) {
-      return (
-        <SubscriptionRedirect
-          {...{ plan: selectedPlan, surveyQuestions: surveyQuestions }}
-        />
-      );
+      return <SubscriptionRedirect {...{ plan: selectedPlan }} />;
     }
   }
 

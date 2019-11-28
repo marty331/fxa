@@ -26,6 +26,8 @@
   "author": "Mozilla (https://mozilla.org/)",
   "license": "MPL-2.0",
   "dependencies": {
+    "@sentry/browser": "^5.9.1",
+    "@sentry/webpack-plugin": "^1.9.3",
     "adr-log": "^2.1.1",
     "chalk": "1.1.1",
     "diffparser": "^2.0.1",
