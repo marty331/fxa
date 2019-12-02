@@ -272,6 +272,32 @@ const conf = convict({
       format: 'url',
     },
   },
+  survey: {
+    id: {
+      default: process.env.SURVEY_ID,
+      doc: 'Survey ID',
+      env: 'SURVEY_ID',
+      format: String,
+    },
+    apiToken: {
+      default: process.env.SURVEY_API_TOKEN,
+      doc: 'API token for Survey',
+      env: 'SURVEY_API_TOKEN',
+      format: String,
+    },
+    apiTokenSecret: {
+      default: process.env.SURVEY_API_TOKEN_SECRET,
+      doc: 'API token secret for Survey',
+      env: 'SURVEY_API_TOKEN_SECRET',
+      format: String,
+    },
+    apiUrl: {
+      default: 'https://restapi.surveygizmo.com/v5/survey/',
+      doc: 'The SurveyGizmo url',
+      env: 'SURVEY_URL',
+      format: String,
+    },
+  },
 });
 
 // handle configuration files.  you can specify a CSV list of configuration

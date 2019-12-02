@@ -28,11 +28,16 @@ export const SubscriptionRedirect = ({
 }: SubscriptionRedirectProps) => {
   const {
     config: { productRedirectURLs },
+    config: { survey },
+    config: { stripe },
     navigateToUrl,
   } = useContext(AppContext);
 
   const redirectUrl =
     productRedirectURLs[product_id] || defaultProductRedirectURL;
+  console.log('survey: ', +survey);
+  console.log('stripe: ' + JSON.stringify(stripe));
+  console.log('surveyQuestions: ' + JSON.stringify(surveyQuestions));
 
   return (
     <div className="product-payment" data-testid="subscription-redirect">
