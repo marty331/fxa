@@ -343,6 +343,11 @@ const MOCK_PROPS: ProductProps = {
     loading: false,
     result: PROFILE,
   },
+  surveyQuestions: {
+    error: null,
+    loading: false,
+    result: surveyQuestions1,
+  },
   plans: {
     error: null,
     loading: false,

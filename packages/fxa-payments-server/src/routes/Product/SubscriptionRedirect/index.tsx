@@ -27,17 +27,19 @@ export const SubscriptionRedirect = ({
   surveyQuestions,
 }: SubscriptionRedirectProps) => {
   const {
-    config: { productRedirectURLs },
-    config: { survey },
-    config: { stripe },
+    config: { productRedirectURLs, survey, stripe, servers },
     navigateToUrl,
   } = useContext(AppContext);
 
   const redirectUrl =
     productRedirectURLs[product_id] || defaultProductRedirectURL;
-  console.log('survey: ', +survey);
+  console.log('survey: ' + JSON.stringify(survey));
+  console.log('survey api: ' + process.env.SURVEY_API_TOKEN);
   console.log('stripe: ' + JSON.stringify(stripe));
+  console.log('servers: ' + JSON.stringify(servers));
   console.log('surveyQuestions: ' + JSON.stringify(surveyQuestions));
+  const surveys = apiFetchSurvey();
+  console.log('surveys: ' + JSON.stringify(surveys));
 
   return (
     <div className="product-payment" data-testid="subscription-redirect">

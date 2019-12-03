@@ -31,6 +31,9 @@ export interface Config {
   };
   survey: {
     apiUrl: string;
+    id: string;
+    api_token: string;
+    api_token_secret: string;
   };
 }
 
@@ -66,6 +69,9 @@ export function defaultConfig(): Config {
     },
     survey: {
       apiUrl: '',
+      id: '',
+      api_token: '',
+      api_token_secret: '',
     },
   };
 }

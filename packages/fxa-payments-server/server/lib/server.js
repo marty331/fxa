@@ -56,6 +56,9 @@ module.exports = () => {
     },
     survey: {
       apiUrl: config.get('survey.apiUrl'),
+      id: config.get('survey.id'),
+      api_token: config.get('survey.apiToken'),
+      api_token_secret: config.get('survey.apiTokenSecret'),
     },
     stripe: {
       apiKey: config.get('stripe.apiKey'),

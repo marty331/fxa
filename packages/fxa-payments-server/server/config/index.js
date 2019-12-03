@@ -274,19 +274,19 @@ const conf = convict({
   },
   survey: {
     id: {
-      default: process.env.SURVEY_ID,
+      default: '5294819',
       doc: 'Survey ID',
       env: 'SURVEY_ID',
       format: String,
     },
     apiToken: {
-      default: process.env.SURVEY_API_TOKEN,
+      default: 'A9CkcPjbrU3OU',
       doc: 'API token for Survey',
       env: 'SURVEY_API_TOKEN',
       format: String,
     },
     apiTokenSecret: {
-      default: process.env.SURVEY_API_TOKEN_SECRET,
+      default: 'f871f597d538acfdb50d6c9e011884fd046920a583aa5fb855',
       doc: 'API token secret for Survey',
       env: 'SURVEY_API_TOKEN_SECRET',
       format: String,

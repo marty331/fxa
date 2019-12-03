@@ -34,6 +34,7 @@ async function init() {
   if (accessToken) {
     updateAPIClientConfig(config);
     updateAPIClientToken(accessToken);
+    store.dispatch(actions.fetchSurvey());
     store.dispatch(actions.fetchToken());
     store.dispatch(actions.fetchProfile());
 

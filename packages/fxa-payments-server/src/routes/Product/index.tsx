@@ -28,6 +28,7 @@ export type ProductProps = {
       productId: string;
     };
   };
+  surveyQuestions: SelectorReturns['surveyQuestions'];
   profile: SelectorReturns['profile'];
   plans: SelectorReturns['plans'];
   customer: SelectorReturns['customer'];
@@ -49,6 +50,7 @@ export const Product = ({
   match: {
     params: { productId },
   },
+  surveyQuestions,
   profile,
   plans,
   customer,
@@ -83,6 +85,8 @@ export const Product = ({
   }, [fetchProductRouteResources]);
 
   const plansById = useMemo(() => indexPlansById(plans), [plans]);
+
+  console.log('index surveyQuestions: ' + JSON.stringify(surveyQuestions));
 
   // Figure out a selected plan for product, either from query param or first plan.
   const productPlans = plansByProductId(productId);
