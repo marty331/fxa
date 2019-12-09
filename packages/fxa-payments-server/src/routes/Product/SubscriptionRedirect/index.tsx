@@ -24,26 +24,33 @@ export const SubscriptionRedirect = ({ plan }: SubscriptionRedirectProps) => {
     downloadURL || productRedirectURLs[product_id] || defaultProductRedirectURL;
 
   useEffect(() => {
-    navigateToUrl(redirectUrl);
-  }, [navigateToUrl, redirectUrl]);
+    window.addEventListener('message', handleIframeTask);
+  });
+
+  const handleIframeTask = (e: any) => {
+    if (e.data === 'submitted survey') {
+      console.log('survey: ' + e.data);
+      navigateToUrl(redirectUrl);
+    }
+  };
 
   return (
     <div className="product-payment" data-testid="subscription-redirect">
       <div className="subscription-ready">
-        <h2>Your subscription is ready</h2>
-        <img
-          alt={product_name}
-          src={webIconURL || fpnImage}
-          width="96"
-          height="96"
-        />
-        <p>
-          Hang on for a moment while we send you to the{' '}
-          <span className="plan-name">{product_name}</span> download page.
-        </p>
-        <a href={redirectUrl}>
-          Click here if you're not automatically redirected
-        </a>
+        <div className="subscription-message">
+          <h2>Your subscription is ready</h2>
+        </div>
+        <div className="formBreakTop breakBuffer"></div>
+        <div className="expMessage">
+          Please take a moment to tell us about your experience.
+        </div>
+        <div className="survey-frame">
+          <iframe src="http://www.surveygizmo.com/s3/5294819/VPN-Subscription?__no_style=true"></iframe>
+        </div>
+        <div className="formBreakBottom breakBuffer"></div>
+        <div>
+          <a href={redirectUrl}>No thanks, just take me to my product.</a>
+        </div>
       </div>
     </div>
   );
