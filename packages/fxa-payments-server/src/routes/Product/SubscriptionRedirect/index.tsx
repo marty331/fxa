@@ -45,7 +45,10 @@ export const SubscriptionRedirect = ({ plan }: SubscriptionRedirectProps) => {
           Please take a moment to tell us about your experience.
         </div>
         <div className="survey-frame">
-          <iframe src="http://www.surveygizmo.com/s3/5294819/VPN-Subscription?__no_style=true"></iframe>
+          <iframe
+            sandbox="allow-scripts allow-forms"
+            src="http://www.surveygizmo.com/s3/5294819/VPN-Subscription?__no_style=true"
+          ></iframe>
         </div>
         <div className="formBreakBottom breakBuffer"></div>
         <div>
